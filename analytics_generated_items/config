@@ -1,10 +1,40 @@
 Host nnode 
-  HostName ec2-3-1-218-9.ap-southeast-1.compute.amazonaws.com 
+  HostName ec2-3-0-61-213.ap-southeast-1.compute.amazonaws.com 
   User ubuntu 
   IdentityFile ~/.ssh/id_rsa 
 
 Host dnode1 
-  HostName ec2-13-250-111-51.ap-southeast-1.compute.amazonaws.com 
+  HostName ec2-54-254-216-180.ap-southeast-1.compute.amazonaws.com 
+  User ubuntu 
+  IdentityFile ~/.ssh/id_rsa 
+
+Host dnode2 
+  HostName ec2-54-179-143-243.ap-southeast-1.compute.amazonaws.com 
+  User ubuntu 
+  IdentityFile ~/.ssh/id_rsa 
+
+Host dnode3 
+  HostName ec2-54-254-166-77.ap-southeast-1.compute.amazonaws.com 
+  User ubuntu 
+  IdentityFile ~/.ssh/id_rsa 
+
+Host dnode4 
+  HostName ec2-54-169-133-27.ap-southeast-1.compute.amazonaws.com 
+  User ubuntu 
+  IdentityFile ~/.ssh/id_rsa 
+
+Host dnode5 
+  HostName ec2-18-136-106-189.ap-southeast-1.compute.amazonaws.com 
+  User ubuntu 
+  IdentityFile ~/.ssh/id_rsa 
+
+Host dnode6 
+  HostName ec2-3-1-213-165.ap-southeast-1.compute.amazonaws.com 
+  User ubuntu 
+  IdentityFile ~/.ssh/id_rsa 
+
+Host dnode7 
+  HostName ec2-18-139-115-81.ap-southeast-1.compute.amazonaws.com 
   User ubuntu 
   IdentityFile ~/.ssh/id_rsa 
 

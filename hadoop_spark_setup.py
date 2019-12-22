@@ -176,7 +176,6 @@ for instance_ip in allnodes_ips:
     try: 
       c = analytics_functions.theconnector(instance_ip, key_pair)
       c.sudo('apt-get -y update')
-      c.sudo('apt-get -y dist-upgrade')
       success = True
 
     except: 
@@ -282,7 +281,7 @@ while(not success):
 # get the public key from namenode
 c.get('.ssh/id_rsa.pub')
 
-# Using the Namenode's key, put it up into the Datanodes and cat to authorized
+# # Using the Namenode's key, put it up into the Datanodes and cat to authorized
 for instance_ip in datanode_ips:
   success = False
   while(not success):
@@ -349,20 +348,20 @@ while(not success):
 # ### Now from Namenode, ssh into the other nodes
 
 # loop through node indexes and ssh and exit each
-for index in range(len(allnodes_ips)):
-  if index == 0:
-    node = 'nnode'
-  else:
-    node = 'dnode' + str(index)
+for index in range(1, len(allnodes_ips)):
+#   if index == 0:
+#     node = 'nnode'
+#   else:
+  node = 'dnode' + str(index)
       
   success = False
   while(not success):
     try:
+      c = analytics_functions.theconnector(namenode_ip, key_pair)
       # ssh into nodes and bypass question
-      c.run(f'ssh -o StrictHostKeyChecking=no {node}')
+      c.run(f'cat ~/.ssh/id_rsa.pub | ssh -o StrictHostKeyChecking=no {node}' +' "cat >> ~/.ssh/authorized_keys"')
       # exit the node
-      time.sleep(1)
-      c.run('exit')
+      c.close()
       print(index)
       success = True
     except:
@@ -476,11 +475,10 @@ for dns in datanode_dns:
 slaves.close()
 
 # Now add slaves file to namenode
-c = theconnector(namenode_ip, key_pair)
+c = analytics_functions.theconnector(namenode_ip, key_pair)
 
 c.put('./analytics_generated_items/slaves')
 c.run('mv slaves ~/spark/spark-2.4.4-bin-hadoop2.7/conf/')
-
 
 ### RUN THUNDERSHOCKKKKKK ###
 c.run('~/spark/spark-2.4.4-bin-hadoop2.7/sbin/start-all.sh')

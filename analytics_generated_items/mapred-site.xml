@@ -19,7 +19,7 @@
 <configuration>
   <property>
     <name>mapreduce.jobtracker.address</name>
-    <value>hdfs://ec2-54-179-176-99.ap-southeast-1.compute.amazonaws.com:54311</value>
+    <value>hdfs://ec2-3-0-61-213.ap-southeast-1.compute.amazonaws.com:54311</value>
   </property>
   <property>
     <name>mapreduce.framework.name</name>
