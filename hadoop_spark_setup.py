@@ -98,7 +98,7 @@ while(not valid):
   default = True
 
   while(default):
-    yes_no = input('Would you like to use the default settings(m5ad.4xlarge and ubuntu18.04) for AMI type and instance type? [y/n]: ')
+    yes_no = input('Would you like to use the default settings(m5dn.4xlarge	 and ubuntu18.04) for AMI type and instance type? [y/n]: ')
 
     if yes_no.lower() == 'y':
       # ec2_instance_size = 't2.medium'
@@ -118,7 +118,7 @@ while(not valid):
     instance_node_list = analytics_functions.create_instances(ami_type, specified_num_nodes, ec2_instance_size, key_pair, security_group_id, ec2)
     valid = True
   except:
-    print('An error occured, please check if defaults were correctly input')
+    print('An error occured, please check if defaults were incorrectly input')
 
 ### Get the list of ids for the namenode and datanodes ###
 
@@ -445,26 +445,6 @@ print("--- %s seconds ---" % (time.time() - start_time))
 # Short delay while hadoop starts up to avoid any issues
 time.sleep(30)
 
-
-# ### Set up Spark on namenode
-# success = False
-# while(not success):
-#   try:
-#     c = analytics_functions.theconnector(namenode_ip, key_pair)
-
-#     # Get spark first
-#     c.run('mkdir spark')
-#     c.run('cd spark && wget https://www-eu.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz')
-#     c.run('cd spark && tar zxvf spark-2.4.4-bin-hadoop2.7.tgz')
-
-#     # Now update the bashrc files
-#     c.put('./allnodes-stuff/spark-cat')
-#     c.run('cat spark-cat >> ~/.bashrc')
-#     success = True
-#   except:
-#     print("something went wrong, sleeping for a bit before retrying")
-#     time.sleep(20)
-
 ### Set up Spark on namenode
 for instance_ip in allnodes_ips:
   success = False
@@ -585,4 +565,9 @@ while(not success):
 
   
 print(f"DONEEE. TOTAL RUN TIME WAS:")
-print("--- %s seconds ---" % (time.time() - start_time))
+print("--- %s seconds ---\n" % (time.time() - start_time))
+print('\n')
+
+print('You can check out the UI for Hadoop and Spark in the following URLs: ')
+print(f'Hadoop UI\n {namenode_dns}:9870')
+print(f'Spark UI\n {namenode_dns}:8080')
