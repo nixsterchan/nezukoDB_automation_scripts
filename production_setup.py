@@ -327,9 +327,11 @@ while(not success):
         c.run('git clone https://github.com/hello2508/Database.git')
         # sudo apt-get update
         c.sudo('apt -y install python3-pip')
-        c.sudo('apt install -y python3-venv')
-        c.run('cd Database/flaskproject/ && python3 -m venv webenv')
-        c.run('cd Database/flaskproject/ && source webenv/bin/activate')
+        c.put('.env')
+        c.run('mv .env ./Database/flaskproject')
+        # c.sudo('apt install -y python3-venv')
+        # c.run('cd Database/flaskproject/ && python3 -m venv webenv')
+        # c.run('cd Database/flaskproject/ && source webenv/bin/activate')
 
         c.run('pip3 install --upgrade setuptools')
         c.run('pip3 install mysql-connector')

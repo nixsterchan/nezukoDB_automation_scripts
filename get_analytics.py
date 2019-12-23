@@ -13,9 +13,9 @@ fil.close()
 namenode_ip, key_pair = namenode_ip_and_key.split('\n')
 ### Get connected to namenode and start running commands ###
 
-input('Press Enter to run the TFIDF script, results will arrive shortly in a file named tfidf_results')
+input('Press Enterget Pearson Correlation output score(wait around a minute or so): ')
 c = analytics_functions.theconnector(namenode_ip, key_pair)
-c.run('cd spark_scripts && python3 tfidf.py')
+c.run('cd spark_scripts && python3 pearson.py')
 
-input('TFIDF done, press Enter again to get Pearson Correlation output score')
-c.run('cd spark_scripts ## python3 pearson.py')
+# input('Press Enter to run the TFIDF script, results will arrive shortly in a file named tfidf_results')
+# c.run('cd spark_scripts && python3 tfidf.py')
