@@ -98,11 +98,11 @@ while(not valid):
   default = True
 
   while(default):
-    yes_no = input('Would you like to use the default settings(m5dn.4xlarge	 and ubuntu18.04) for AMI type and instance type? [y/n]: ')
+    yes_no = input('Would you like to use the default settings(t3a.2xlarge and ubuntu18.04) for AMI type and instance type? [y/n]: ')
 
     if yes_no.lower() == 'y':
       # ec2_instance_size = 't2.medium'
-      ec2_instance_size = 'm5ad.4xlarge'
+      ec2_instance_size = 't3a.2xlarge'
       ami_type = 'ami-061eb2b23f9f8839c'
       default = False
     elif yes_no.lower() == 'n':
