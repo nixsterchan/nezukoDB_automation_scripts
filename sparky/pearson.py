@@ -47,9 +47,6 @@ meta = meta.drop("description") \
 
 # ensure values are greater than 0
 meta = meta.where((meta.price > 0))
-meta.show(5)
-
-
 
 combined_table = meta.join(reviews, meta.asin == reviews.asin_id)
 combined_table = combined_table.drop('asin_id')
@@ -82,20 +79,3 @@ denominator = math.sqrt((n*x_sq_sum - (x_sum)**2) * (n*y_sq_sum - (y_sum)**2))
 pear = numerator / denominator
 print("Pearson correlation coefficient: ", pear)
 
-# print('after first')
-# p_avg = rdd.map(lambda x: x[1]).sum()/n
-# print('after second')
-
-# l_avg = rdd.map(lambda x: x[2]).sum()/n
-# print('after third')
-
-# numerator = rdd.map(lambda x: (x[1]-p_avg)*(x[2]-l_avg)).sum()
-# print('after fourth')
-
-# p1 = rdd.map(lambda x: (x[1] - p_avg)**2).sum()
-# print('after fifth')
-
-# l1 = rdd.map(lambda x: (x[1] - p_avg)**2).sum()
-# denominator = math.sqrt(p1)*math.sqrt(l1)
-# crr = numerator/denominator
-# print("Pearson correlation coefficient: ",crr)
