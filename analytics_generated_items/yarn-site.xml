@@ -25,7 +25,7 @@
   </property>
   <property>
     <name>yarn.resourcemanager.hostname</name>
-    <value>hdfs://ec2-18-140-54-24.ap-southeast-1.compute.amazonaws.com</value>
+    <value>hdfs://ec2-13-229-141-176.ap-southeast-1.compute.amazonaws.com</value>
   </property>
 
 </configuration>

@@ -98,10 +98,11 @@ while(not valid):
   default = True
 
   while(default):
-    yes_no = input('Would you like to use the default settings for AMI type and instance type? [y/n]: ')
+    yes_no = input('Would you like to use the default settings(m5ad.4xlarge and ubuntu18.04) for AMI type and instance type? [y/n]: ')
 
     if yes_no.lower() == 'y':
-      ec2_instance_size = 't2.medium'
+      # ec2_instance_size = 't2.medium'
+      ec2_instance_size = 'm5ad.4xlarge'
       ami_type = 'ami-061eb2b23f9f8839c'
       default = False
     elif yes_no.lower() == 'n':
@@ -540,7 +541,7 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 # write the dns into a file for use in pyspark later
 fil = open('./analytics_generated_items/namenode_url', 'w')
-fil.write(f'hdfs://{namenode_dns}:9000')
+fil.write(f'hdfs://{namenode_dns}:9000/')
 fil.close()
 
 # write the ip and key name into a file for use in getting analytics later
@@ -555,7 +556,7 @@ success = False
 while(not success):
   try: 
     c = analytics_functions.theconnector(namenode_ip, key_pair)
-    c.sudo('apt -y install install python3-pip')
+    c.sudo('apt -y install python3-pip')
     c.run('pip3 install numpy pyspark')
 
     success = True
@@ -580,3 +581,8 @@ while(not success):
     print('something went wrong, sleepin for a bit')
     c.close()
     time.sleep(20)
+
+
+  
+print(f"DONEEE. TOTAL RUN TIME WAS:")
+print("--- %s seconds ---" % (time.time() - start_time))

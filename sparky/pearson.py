@@ -12,7 +12,7 @@ fil = open('namenode_url', 'r')
 location = fil.read()
 fil.close()
 
-# get reviews metadata from hdfs and load into dataframe
+# get reviews from hdfs and load into dataframe
 reviews = spark.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load(location + 'kindle_reviews.csv')
 
 # drop unnecessary columns
