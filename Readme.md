@@ -22,7 +22,7 @@ Make sure you are in the project **root** folder.
  
 
 ## 2. Setting up Production
-> production.py .
+> production_setup.py .
 
 Access into `cd dbds_project/Database/flaskproject` from your command line, run:
 - `python3 app.py`
