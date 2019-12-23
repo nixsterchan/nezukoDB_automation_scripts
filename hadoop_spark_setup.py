@@ -77,9 +77,8 @@ while(not valid):
 valid = False
 
 while(not valid):
-  key_pair = input('Please enter your desired new key name that does not already exist: ')
-
   try:
+    key_pair = input('Please enter your desired new key name that does not already exist: ')
     # test to see if this key name already exists
     analytics_functions.create_key_pair(key_pair, ec2)
     valid = True
@@ -446,24 +445,44 @@ print("--- %s seconds ---" % (time.time() - start_time))
 time.sleep(30)
 
 
+# ### Set up Spark on namenode
+# success = False
+# while(not success):
+#   try:
+#     c = analytics_functions.theconnector(namenode_ip, key_pair)
+
+#     # Get spark first
+#     c.run('mkdir spark')
+#     c.run('cd spark && wget https://www-eu.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz')
+#     c.run('cd spark && tar zxvf spark-2.4.4-bin-hadoop2.7.tgz')
+
+#     # Now update the bashrc files
+#     c.put('./allnodes-stuff/spark-cat')
+#     c.run('cat spark-cat >> ~/.bashrc')
+#     success = True
+#   except:
+#     print("something went wrong, sleeping for a bit before retrying")
+#     time.sleep(20)
+
 ### Set up Spark on namenode
-success = False
-while(not success):
-  try:
-    c = analytics_functions.theconnector(namenode_ip, key_pair)
+for instance_ip in allnodes_ips:
+  success = False
+  while(not success):
+    try:
+      c = analytics_functions.theconnector(instance_ip, key_pair)
 
-    # Get spark first
-    c.run('mkdir spark')
-    c.run('cd spark && wget https://www-eu.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz')
-    c.run('cd spark && tar zxvf spark-2.4.4-bin-hadoop2.7.tgz')
+      # Get spark first
+      c.run('mkdir spark')
+      c.run('cd spark && wget https://www-eu.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz')
+      c.run('cd spark && tar zxvf spark-2.4.4-bin-hadoop2.7.tgz')
 
-    # Now update the bashrc files
-    c.put('./allnodes-stuff/spark-cat')
-    c.run('cat spark-cat >> ~/.bashrc')
-    success = True
-  except:
-    print("something went wrong, sleeping for a bit before retrying")
-    time.sleep(20)
+      # Now update the bashrc files
+      c.put('./allnodes-stuff/spark-cat')
+      c.run('cat spark-cat >> ~/.bashrc')
+      success = True
+    except:
+      print("something went wrong, sleeping for a bit before retrying")
+      time.sleep(20)
     
 print("time elapsed after setting up spark on all nodes:")
 print("--- %s seconds ---" % (time.time() - start_time))
@@ -519,6 +538,45 @@ print(f"Total Time elapsed to run {specified_num_nodes} nodes in the cluster:")
 print("--- %s seconds ---" % (time.time() - start_time))
 
 
+# write the dns into a file for use in pyspark later
+fil = open('./analytics_generated_items/namenode_url', 'w')
+fil.write(f'hdfs://{namenode_dns}:9000')
+fil.close()
+
+# write the ip and key name into a file for use in getting analytics later
+fil2 = open('./analytics_generated_items/namenode_ip_and_key', 'w')
+fil2.write(f'{namenode_ip}\n')
+fil2.write(f'{key_pair}')
+fil2.close()
 
 
+### install some dependencies on namenode
+success = False
+while(not success):
+  try: 
+    c = analytics_functions.theconnector(namenode_ip, key_pair)
+    c.sudo('apt -y install install python3-pip')
+    c.run('pip3 install numpy pyspark')
 
+    success = True
+  except:
+    print('something went wrong, sleepin for a bit')
+    c.close()
+    time.sleep(20)
+
+### now to push up our spark scripts into a designated spark folder in namenode
+success = False
+while(not success):
+  try: 
+    c = analytics_functions.theconnector(namenode_ip, key_pair)
+    c.put('./analytics_generated_items/namenode_url')
+    c.put('./sparky/pearson.py')
+    c.put('./sparky/tfidf.py')
+
+    c.run('mkdir spark_scripts && mv namenode_url pearson.py tfidf.py ~/spark_scripts')
+
+    success = True
+  except:
+    print('something went wrong, sleepin for a bit')
+    c.close()
+    time.sleep(20)
