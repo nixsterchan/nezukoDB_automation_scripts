@@ -12,8 +12,6 @@ Group members:
 ![Image result for nezuko e](https://66.media.tumblr.com/2f02891eac278179c9812116a0a266be/3805e63377d89112-29/s640x960/60272d35ed9c61f889237de6f65bb1934a40eabd.jpg)
 
 ## 1. Getting the Dependencies
-> requirements.txt .
-
 Make sure you are in the project **root** folder. 
 - For this project, installation of `boto3` and `fabric` python lib packages are required
 - `pip3 install boto3`
