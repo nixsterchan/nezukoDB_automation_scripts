@@ -303,12 +303,12 @@ while(not success):
         # Transfer kindle_reviews.csv from S3 to the instance
         c.run('mkdir data') 
         c.run('cd data && wget -c https://dbds-kindle-reviews.s3-ap-southeast-1.amazonaws.com/kindlereviews.sql')
-        
-        # Setting up kindle_reviews database
+    
         c.sudo('mysql -e "create database dbds"')
         c.sudo('mysql -e "' + 'GRANT ALL PRIVILEGES ON *.* TO' + "'ubuntu'" + 'IDENTIFIED BY' + "'password';" + '"')
         c.run('cd data && mysql -u ubuntu -ppassword -D dbds -e "source kindlereviews.sql"')
-        c.sudo("sed -i 's/bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf")
+        # c.sudo("sed -i 's/bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf")
+        c.sudo("sed -ir 's/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf")
         c.sudo('service mysql restart')
 
         success = True

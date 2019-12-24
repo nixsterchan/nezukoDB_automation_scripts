@@ -15,10 +15,9 @@ Group members:
 > requirements.txt .
 
 Make sure you are in the project **root** folder. 
-- Start with creating a virtualenv (e.g. myvenv), download if haven't
-- `source ./myvenv/bin/activate`
-- `pip3 install -r requirements.txt`
-- If `requirements.txt` fails to execute, install `boto3` and `fabric` python lib packages
+- For this project, installation of `boto3` and `fabric` python lib packages are required
+- `pip3 install boto3`
+- `pip3 install fabric`
  
 
 ## 2. Setting up Production
