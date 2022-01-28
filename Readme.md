@@ -49,5 +49,5 @@ Once the script is completed, you can visit the links shown in the terminal to c
 To get the Pearson Correlation and TF-IDF results, run:
 - `python3 get_analytics.py`
 - The server will start the task and results are generated in approx. 10mins. Pearson correlation will be printed in the terminal.
-- The second functionality involving the TF-IDF had issues with OutOfMemory errors and as such will be commented out. Still working on it despite the project having ended. Intention is to output all the results into a file where said file will be transferred to your local repo for viewing.
+- The second functionality involving the TF-IDF had issues with OutOfMemory errors and as such will be commented out. Use this project stuff at your own discretion.
 
